@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as courseActions from '../../redux/actions/courseActions';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 
 class CoursesPage extends React.Component {
   state = {
@@ -22,7 +23,7 @@ class CoursesPage extends React.Component {
     // anything. action creators just return an object
     // we don't need to call dispatch here since that's being handled in
     // mapDispatchToProps now
-    this.props.createCourse(this.state.course);
+    this.props.actions.createCourse(this.state.course);
   }
 
   render() {
@@ -45,7 +46,7 @@ CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
   // since we declared mapDispatchToProps, dispatch is no longer injected.
   // only the actions we declared in mapDispatchToProps are passed in.
-  createCourse: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired
 };
 
 //this func determines what state is passed to our component via props
@@ -60,7 +61,7 @@ function mapDispatchToProps(dispatch) {
     // remember, if you don't call dispatch, nothing will happen. action
     // creators must be called by dispatch
     // dispatch is the function that notifies redux about an action
-    createCourse: course => dispatch(courseActions.createCourse(course))
+    actions: bindActionCreators(courseActions, dispatch)
   }
 }
 
