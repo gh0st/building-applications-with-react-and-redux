@@ -20,7 +20,7 @@ class CoursesPage extends React.Component {
     // since we didn't declare mapDispatchToProps, connect automatically adds Dispatch as a prop
     // remember: you have to dispatch an action. if you just call an action creator it won't do
     // anything. action creators just return an object
-    this.props.dispatch(courseActions.createCourse(this.state.course.title));
+    this.props.dispatch(courseActions.createCourse(this.state.course));
   }
 
   render() {
