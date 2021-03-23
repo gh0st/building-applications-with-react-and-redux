@@ -1,10 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadCourses } from '../../redux/actions/courseActions';
 import { loadAuthors } from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
+import CourseForm from './CourseForm';
+import { newCourse } from '../../../tools/mockData';
 
-function ManageCoursePage({ courses, authors, loadAuthors, loadCourses }) {
+function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, ...props }) {
+  const [ course, setCourse ] = useState({ ...props.course });
+  const [ errors, setErrors ] = useState({});
+
   useEffect(() => {
     if (courses.length === 0) {
       loadCourses().catch((error) => {
@@ -20,13 +25,12 @@ function ManageCoursePage({ courses, authors, loadAuthors, loadCourses }) {
   }, []);
 
   return (
-    <>
-      <h2>Manage Course</h2>
-    </>
+    <CourseForm course={course} errors={errors} authors={authors} />
   );
 }
 
 ManageCoursePage.propTypes = {
+  course: PropTypes.object.isRequired,
   courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
   // since we declared mapDispatchToProps, dispatch is no longer injected.
@@ -38,6 +42,7 @@ ManageCoursePage.propTypes = {
 //this func determines what state is passed to our component via props
 function mapStateToProps(state) {
   return {
+    course: newCourse,
     courses: state.courses,
     authors: state.authors
   };
