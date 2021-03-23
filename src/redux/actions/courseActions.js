@@ -6,11 +6,11 @@ export function loadCourseSuccess(courses) {
 }
 
 export function createCourseSuccess(course) {
-  return { type: types.CREATE_COURSE_SUCCCESS, course };
+  return { type: types.CREATE_COURSE_SUCCESS, course };
 }
 
 export function updateCourseSuccess(course) {
-  return { type: types.UPDATE_COURSE_SUCCCESS, course };
+  return { type: types.UPDATE_COURSE_SUCCESS, course };
 }
 
 export function loadCourses() {
@@ -27,7 +27,7 @@ export function loadCourses() {
 export function saveCourse(course) {
   // redux thunk injects dispatch so we don't have to
   return function(dispatch, getState) {
-    return courseApi.saveCourses().then(savedCourse => {
+    return courseApi.saveCourse(course).then(savedCourse => {
       course.id
         ? dispatch(updateCourseSuccess(savedCourse))
         : dispatch(createCourseSuccess(savedCourse));

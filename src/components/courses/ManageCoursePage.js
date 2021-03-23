@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { loadCourses } from '../../redux/actions/courseActions';
+import { loadCourses, saveCourse } from '../../redux/actions/courseActions';
 import { loadAuthors } from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
 import CourseForm from './CourseForm';
 import { newCourse } from '../../../tools/mockData';
 
-function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, ...props }) {
+function ManageCoursePage({
+  courses, authors, loadAuthors,
+  loadCourses, saveCourse, ...props
+}) {
   const [ course, setCourse ] = useState({ ...props.course });
   const [ errors, setErrors ] = useState({});
 
@@ -32,12 +35,18 @@ function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, ...props
     }));
   }
 
+  function handleSave(event) {
+    event.preventDefault();
+    saveCourse(course);
+  }
+
   return (
     <CourseForm
       course={course}
       errors={errors}
       authors={authors}
       onChange={handleChange}
+      onSave={handleSave}
     />
   );
 }
@@ -50,6 +59,7 @@ ManageCoursePage.propTypes = {
   // only the actions we declared in mapDispatchToProps are passed in.
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
+  saveCourse: PropTypes.func.isRequired
 };
 
 //this func determines what state is passed to our component via props
@@ -63,7 +73,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   loadCourses,
-  loadAuthors
+  loadAuthors,
+  saveCourse
 };
 
 // when we omit mapDispatchToProps, our componenet gets a dispatch prop injected automatically
