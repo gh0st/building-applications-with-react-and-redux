@@ -18,6 +18,8 @@ function ManageCoursePage({
       loadCourses().catch((error) => {
         alert('Loading courses failed ' + error);
       });
+    } else {
+      setCourse({ ...props.course });
     }
 
     if (authors.length === 0) {
@@ -25,7 +27,7 @@ function ManageCoursePage({
         alert('Loading authors failed ' + error);
       });
     }
-  }, []);
+  }, [props.course]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -65,10 +67,18 @@ ManageCoursePage.propTypes = {
   history: PropTypes.object.isRequired
 };
 
+export function getCourseBySlug(courses, slug) {
+  return courses.find(course => course.slug === slug) || null;
+}
+
 //this func determines what state is passed to our component via props
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const course = slug && state.courses.length > 0
+    ? getCourseBySlug(state.courses, slug)
+    : newCourse;
+  const slug = ownProps.match.params.slug;
   return {
-    course: newCourse,
+    course, // look at the url and determine if they're updating or creating a course
     courses: state.courses,
     authors: state.authors
   };
