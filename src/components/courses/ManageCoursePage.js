@@ -8,7 +8,7 @@ import { newCourse } from '../../../tools/mockData';
 
 function ManageCoursePage({
   courses, authors, loadAuthors,
-  loadCourses, saveCourse, ...props
+  loadCourses, saveCourse, history, ...props
 }) {
   const [ course, setCourse ] = useState({ ...props.course });
   const [ errors, setErrors ] = useState({});
@@ -37,7 +37,9 @@ function ManageCoursePage({
 
   function handleSave(event) {
     event.preventDefault();
-    saveCourse(course);
+    saveCourse(course).then(() => {
+      history.push('/courses');
+    });
   }
 
   return (
@@ -59,7 +61,8 @@ ManageCoursePage.propTypes = {
   // only the actions we declared in mapDispatchToProps are passed in.
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
-  saveCourse: PropTypes.func.isRequired
+  saveCourse: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 //this func determines what state is passed to our component via props
