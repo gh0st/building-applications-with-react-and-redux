@@ -24,8 +24,21 @@ function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, ...props
     }
   }, []);
 
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setCourse(prevCourse => ({
+      ...prevCourse,
+      [name]: name === "authorId" ? parseInt(value, 10) : value //this is javascripts computed property syntax, it allows us to reference a property via a variable
+    }));
+  }
+
   return (
-    <CourseForm course={course} errors={errors} authors={authors} />
+    <CourseForm
+      course={course}
+      errors={errors}
+      authors={authors}
+      onChange={handleChange}
+    />
   );
 }
 
