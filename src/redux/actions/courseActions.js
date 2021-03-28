@@ -1,6 +1,6 @@
-import * as types from "./actionTypes";
-import * as courseApi from "../../api/courseApi";
-import { beginApiCall } from "./apiStatusActions";
+import * as types from './actionTypes';
+import * as courseApi from '../../api/courseApi';
+import { beginApiCall } from './apiStatusActions';
 
 export function loadCourseSuccess(courses) {
   return { type: types.LOAD_COURSES_SUCCESS, courses };
@@ -16,26 +16,32 @@ export function updateCourseSuccess(course) {
 
 export function loadCourses() {
   // redux thunk injects dispatch so we don't have to
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginApiCall());
-    return courseApi.getCourses().then(courses => {
-      dispatch(loadCourseSuccess(courses));
-    }).catch(error => {
-      throw error;
-    });
-  }
+    return courseApi
+      .getCourses()
+      .then((courses) => {
+        dispatch(loadCourseSuccess(courses));
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
 }
 
 export function saveCourse(course) {
   // redux thunk injects dispatch so we don't have to
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch(beginApiCall());
-    return courseApi.saveCourse(course).then(savedCourse => {
-      course.id
-        ? dispatch(updateCourseSuccess(savedCourse))
-        : dispatch(createCourseSuccess(savedCourse));
-    }).catch(error => {
-      throw error;
-    });
-  }
+    return courseApi
+      .saveCourse(course)
+      .then((savedCourse) => {
+        course.id
+          ? dispatch(updateCourseSuccess(savedCourse))
+          : dispatch(createCourseSuccess(savedCourse));
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
 }
