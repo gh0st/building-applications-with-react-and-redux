@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import TextInput from "../common/TextInput";
-import SelectInput from "../common/SelectInput";
+import React from 'react';
+import PropTypes from 'prop-types';
+import TextInput from '../common/TextInput';
+import SelectInput from '../common/SelectInput';
 
 const CourseForm = ({
   course,
@@ -9,11 +9,11 @@ const CourseForm = ({
   onSave,
   onChange,
   saving = false,
-  errors = {}
+  errors = {},
 }) => {
   return (
     <form onSubmit={onSave}>
-      <h2>{course.id ? "Edit" : "Add"} Course</h2>
+      <h2>{course.id ? 'Edit' : 'Add'} Course</h2>
       {errors.onSave && (
         <div className="alert alert-danger" role="alert">
           {errors.onSave}
@@ -30,11 +30,11 @@ const CourseForm = ({
       <SelectInput
         name="authorId"
         label="Author"
-        value={course.authorId || ""}
+        value={course.authorId || ''}
         defaultOption="Select Author"
-        options={authors.map(author => ({
+        options={authors.map((author) => ({
           value: author.id,
-          text: author.name
+          text: author.name,
         }))}
         onChange={onChange}
         error={errors.author}
@@ -49,7 +49,7 @@ const CourseForm = ({
       />
 
       <button type="submit" disabled={saving} className="btn btn-primary">
-        {saving ? "Saving..." : "Save"}
+        {saving ? 'Saving...' : 'Save'}
       </button>
     </form>
   );
@@ -61,7 +61,7 @@ CourseForm.propTypes = {
   errors: PropTypes.object,
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  saving: PropTypes.bool
+  saving: PropTypes.bool,
 };
 
 export default CourseForm;
