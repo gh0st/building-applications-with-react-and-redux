@@ -1,5 +1,6 @@
 import * as types from "./actionTypes";
 import * as courseApi from "../../api/courseApi";
+import { beginApiCall } from "./apiStatusActions";
 
 export function loadCourseSuccess(courses) {
   return { type: types.LOAD_COURSES_SUCCESS, courses };
@@ -16,6 +17,7 @@ export function updateCourseSuccess(course) {
 export function loadCourses() {
   // redux thunk injects dispatch so we don't have to
   return function(dispatch) {
+    dispatch(beginApiCall());
     return courseApi.getCourses().then(courses => {
       dispatch(loadCourseSuccess(courses));
     }).catch(error => {
@@ -27,6 +29,7 @@ export function loadCourses() {
 export function saveCourse(course) {
   // redux thunk injects dispatch so we don't have to
   return function(dispatch, getState) {
+    dispatch(beginApiCall());
     return courseApi.saveCourse(course).then(savedCourse => {
       course.id
         ? dispatch(updateCourseSuccess(savedCourse))
