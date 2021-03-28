@@ -5,7 +5,7 @@ import { loadAuthors } from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
 import CourseForm from './CourseForm';
 import { newCourse } from '../../../tools/mockData';
-import Spinner from "../common/Spinner";
+import Spinner from '../common/Spinner';
 import { toast } from 'react-toastify';
 
 function ManageCoursePage({
@@ -17,9 +17,9 @@ function ManageCoursePage({
   history,
   ...props
 }) {
-  const [ course, setCourse ] = useState({ ...props.course });
-  const [ errors, setErrors ] = useState({});
-  const [ saving, setSaving ] = useState(false);
+  const [course, setCourse] = useState({ ...props.course });
+  const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -39,9 +39,9 @@ function ManageCoursePage({
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setCourse(prevCourse => ({
+    setCourse((prevCourse) => ({
       ...prevCourse,
-      [name]: name === "authorId" ? parseInt(value, 10) : value //this is javascripts computed property syntax, it allows us to reference a property via a variable
+      [name]: name === 'authorId' ? parseInt(value, 10) : value, //this is javascripts computed property syntax, it allows us to reference a property via a variable
     }));
   }
 
@@ -52,6 +52,10 @@ function ManageCoursePage({
       .then(() => {
         toast.success('Course saved.');
         history.push('/courses');
+      })
+      .catch((error) => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
       });
   }
 
@@ -78,11 +82,11 @@ ManageCoursePage.propTypes = {
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
   saveCourse: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 };
 
 export function getCourseBySlug(courses, slug) {
-  return courses.find(course => course.slug === slug) || null;
+  return courses.find((course) => course.slug === slug) || null;
 }
 
 //this func determines what state is passed to our component via props
@@ -95,19 +99,16 @@ function mapStateToProps(state, ownProps) {
   return {
     course, // look at the url and determine if they're updating or creating a course
     courses: state.courses,
-    authors: state.authors
+    authors: state.authors,
   };
 }
 
 const mapDispatchToProps = {
   loadCourses,
   loadAuthors,
-  saveCourse
+  saveCourse,
 };
 
 // when we omit mapDispatchToProps, our componenet gets a dispatch prop injected automatically
 // mapDispatchToProps determines what actions are available on props in our component
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ManageCoursePage);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
