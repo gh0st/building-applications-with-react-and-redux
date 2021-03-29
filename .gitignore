@@ -1,3 +1,4 @@
 node_modules
 tools/db.json
 .DS_Store
+build/
