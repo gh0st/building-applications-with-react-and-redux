@@ -1,5 +1,18 @@
 # Starter Kit for [Building Applications in React and Redux](http://www.pluralsight.com/author/cory-house) on Pluralsight
 
+## Todo - Final Challenges
+
+1. Author administration - add support for adminstrating authors. Be sure to add some logic to make sure you cannot delete an author who has a course.
+2. Filter course list - add filters for the course list at the top of the course list table.
+3. Hide empty course list - hide the course list table when there are no courses.
+4. Unsaved changes message - message to the user if they try to leave the manage course form when they have unsaved changes.
+5. Enhance validation - enhance the client and server side validation on the manage course form to be more strict about the data you can enter.
+6. Handle 404 on edit course - show a 404 on the manage course page when an invalid course slug is provided in the url. _Hint:_ add some logic to map state to props
+7. Show the number of courses in the header.
+8. Pagination - add pagination to the course table in order to support large datasets.
+9. Sort course table - sort the course table alphabetically by title by default so the last record updated or added isn't always at the bottom.
+10. Revert abandoned changes - try keeping old course data so users can undo changes.
+
 ## Get Started
 
 1. **Install [Node 8](https://nodejs.org)** or newer. Need to run multiple versions of Node? Use [nvm](https://github.com/creationix/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows)(https://github.com/coryhouse/pluralsight-redux-starter/archive/master.zip)
