@@ -8,12 +8,12 @@ import configureMockStore from 'redux-mock-store';
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 
-describe('async actions', () => {
+describe('Async Actions', () => {
   afterEach(() => {
     fetchMock.restore();
   });
 
-  describe('load courses thunk', () => {
+  describe('Load Courses Thunk', () => {
     it('should create BEGIN_API_CALL and LOAD_COURSES_SUCCESS when loading courses', () => {
       fetchMock.mock('*', {
         body: courses,
@@ -22,11 +22,11 @@ describe('async actions', () => {
 
       const expectedActions = [
         { type: types.BEGIN_API_CALL },
-        { type: types.LOAD_COURSES_SUCCESS },
+        { type: types.LOAD_COURSES_SUCCESS, courses },
       ];
 
       const store = mockStore({ courses: [] });
-      return store.dispatch(courseActions.loadCourseSuccess()).then(() => {
+      return store.dispatch(courseActions.loadCourses()).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
     });
